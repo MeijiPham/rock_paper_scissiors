@@ -1,0 +1,1 @@
+This is my first attempt at making RPS in the JS console. Will improve it more in the future.
