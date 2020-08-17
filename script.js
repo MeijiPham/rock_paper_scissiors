@@ -47,7 +47,9 @@ function compareInputs(playerInput) {
       scenario.lose();
       break;
   }
-  endGame();
+  endGameScenario.endGameScenario1();
+  endGameScenario.endGameScenario2();
+  endGameScenario.endGameScenario3();
 
 };
 
@@ -78,16 +80,55 @@ let scenario = {
 
 // End game
 
-function endGame() {
+let endGameScenario = {
+endGameScenario1: function() {
   if (roundCount === maxRound) {
     if (playerScore > computerScore) {
       alert("Player wins!");
+      resetGame();
     }
-    else {
+    else if (playerScore < computerScore) {
       alert("Computer wins!");
+      resetGame();
     }
   }
+},
+endGameScenario2: function() {
+  if (roundCount === 4) {
+    if (playerScore === 4) {
+      alert("Player wins!");
+      resetGame();
+    }
+    else if (computerScore === 4) {
+      alert("Computer wins!");
+      resetGame();
+    }
+  }
+},
+endGameScenario3: function() {
+  if (roundCount === 3 || roundCount === 4) {
+    if (playerScore === 3) {
+      alert("Player wins!");
+      resetGame();
+    }
+    else if (computerScore === 3) {
+      alert("Computer wins!");
+      resetGame();
+    }  
+  }
 }
+}
+
+// Reset the game
+
+function resetGame() {
+  roundCount = 0;
+  playerScore = 0;
+  computerScore = 0;
+}
+
+
+
 
 
 
