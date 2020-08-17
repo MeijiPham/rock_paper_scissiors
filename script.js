@@ -31,19 +31,36 @@ function compareInputs(playerInput) {
   let computerChoice = computerPlay();
 
   switch (playerInput + computerChoice) {
+    // Draw
     case "rr":
     case "pp":
     case "ss":
       scenario.draw();
       break;
+    // Player wins
     case "rs":
-    case "pr":
-    case "sp":
+      console.log("Rock beats scissors! You win!");
       scenario.win();
       break;
+    case "pr":
+      console.log("Paper beats rock! You win!");
+      scenario.win();
+      break;
+    case "sp":
+      console.log("Scissors beats paper! You win!");
+      scenario.win();
+      break;
+    // Computer wins
     case "rp":
+      console.log("Rock does not beat paper! You lose!");;
+      scenario.lose();
+      break;
     case "ps":
+      console.log("Paper does not beat scissors! You lose!");
+      scenario.lose();
+      break;
     case "sr":
+      console.log("Scissors does not beat rock! You lose!");
       scenario.lose();
       break;
   }
@@ -59,14 +76,12 @@ let scenario = {
   win: function() {
     playerScore++;
     roundCount++;
-    console.log("You win!");
     console.log("Player's Score: " + playerScore);
     console.log("Computer's Score: " + computerScore);
   },
   lose: function() {
     computerScore++;
     roundCount++;
-    console.log("You lost!")
     console.log("Player's Score: " + playerScore);
     console.log("Computer's Score: " + computerScore);
   },
