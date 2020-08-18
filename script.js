@@ -1,146 +1,150 @@
-let roundCount = 0;
+// Getting attributes from html elements
+let winBoardDisplay = document.querySelector("#gameboard-display");
+let loseBoardDisplay = document.querySelector("#gameboard-display");
+let playerScoreDisplay = document.querySelector("#player-score");
+let computerScoreDisplay = document.querySelector("#computer-score");
+let drawBoardDisplay = document.querySelector("#gameboard-display");
+let playerScoreNumber = document.createElement("p");
+let computerScoreNumber = document.createElement("p");
+let resetBoard = document.querySelector("#gameboard-display");
+
+// Starting score
 let playerScore = 0;
 let computerScore = 0;
-let maxRound = 5;
-
+let maxScore = 5;
 
 
 // Player and Computer inputs
 
 function computerPlay() {
-  let options = ["r", "p", "s"];
+  let options = ["Rock", "Paper", "Scissors"];
   let randomOption = (Math.floor(Math.random() * options.length));
   return options[randomOption];
   };
 
-let playerInput = {
-  chooseRock: function() {
-    compareInputs("r");
-  },
-  choosePaper: function() {
-    compareInputs("p");
-  },
-  chooseScissors: function() {
-    compareInputs("s");
-  }
-};
+let rockOption = document.querySelector("#rock");
+rockOption.addEventListener("click", function() {
+  compareInputs("Rock");
+});
+
+let paperOption = document.querySelector("#paper");
+paperOption.addEventListener("click", function() {
+  compareInputs("Paper");
+});
+
+let scissorsOption = document.querySelector("#scissors");
+scissorsOption.addEventListener("click", function() {
+  compareInputs("Scissors");
+});
+
 
 // Compare the inputs from player and computer
 
 function compareInputs(playerInput) {
-  let computerChoice = computerPlay();
+  let computerInput = computerPlay();
 
-  switch (playerInput + computerChoice) {
+  switch (playerInput + computerInput) {
     // Draw
-    case "rr":
-    case "pp":
-    case "ss":
+    case "RockRock":
+    case "PaperPaper":
+    case "ScissorsScissors":
       scenario.draw();
       break;
     // Player wins
-    case "rs":
-      console.log("Rock beats scissors! You win!");
-      scenario.win();
-      break;
-    case "pr":
-      console.log("Paper beats rock! You win!");
-      scenario.win();
-      break;
-    case "sp":
-      console.log("Scissors beats paper! You win!");
+    case "RockScissors":
+    case "PaperRock":
+    case "ScissorsPaper":
+      winBoardDisplay.textContent = `${playerInput} beats ${computerInput.toLowerCase()}. You win!`;
       scenario.win();
       break;
     // Computer wins
-    case "rp":
-      console.log("Rock does not beat paper! You lose!");;
-      scenario.lose();
-      break;
-    case "ps":
-      console.log("Paper does not beat scissors! You lose!");
-      scenario.lose();
-      break;
-    case "sr":
-      console.log("Scissors does not beat rock! You lose!");
+    case "RockPaper":
+    case "PaperScissors":
+    case "ScissorsRock":
+      loseBoardDisplay.textContent = `${playerInput} does not beat ${computerInput.toLowerCase()}. You lose!`;
       scenario.lose();
       break;
   }
-  endGameScenario.endGameScenario1();
-  endGameScenario.endGameScenario2();
-  endGameScenario.endGameScenario3();
+
+    
+  
 
 };
 
-// Keeping Scores
+// Keeping scores and stopping scores from changing if game ended
 
 let scenario = {
   win: function() {
-    playerScore++;
-    roundCount++;
-    console.log("Player's Score: " + playerScore);
-    console.log("Computer's Score: " + computerScore);
+    if (playerScore < maxScore && computerScore != maxScore) {
+      playerScore++;
+      playerScoreDisplay.textContent = "";
+
+      playerScoreNumber.textContent = "Player's Score: " + playerScore;
+      playerScoreDisplay.appendChild(playerScoreNumber);
+      endGame();
+    }
+    else {
+      playerScoreNumber.textContent = "Player's Score: " + playerScore;
+      winBoardDisplay.textContent = "";
+      alert("Hit the reset button to play again!");
+    }
   },
   lose: function() {
-    computerScore++;
-    roundCount++;
-    console.log("Player's Score: " + playerScore);
-    console.log("Computer's Score: " + computerScore);
+    if (computerScore < maxScore && playerScore != maxScore) {
+      computerScore++;
+      computerScoreDisplay.textContent = "";
+
+      computerScoreNumber.textContent = "Computer's Score: " + computerScore;
+      computerScoreDisplay.appendChild(computerScoreNumber);
+      endGame();
+    }
+    else {
+      computerScoreNumber.textContent = "Computer's Score: " + computerScore;
+      loseBoardDisplay.textContent = "";
+      alert("Hit the reset button to play again!");
+    }
   },
   draw: function() {
-    console.log("Draw!")
-    console.log("Player's Score: " + playerScore);
-    console.log("Computer's Score: " + computerScore);
-  }
-  
+    if (computerScore < maxScore && playerScore < maxScore) {
+      drawBoardDisplay.textContent = "Draw!";
+    }
+    else {
+      drawBoardDisplay.textContent = "";
+      alert("Hit the reset button to play again!");
+    }    
+   }  
 };
 
 // End game
 
-let endGameScenario = {
-endGameScenario1: function() {
-  if (roundCount === maxRound) {
-    if (playerScore > computerScore) {
-      alert("Player wins!");
-      resetGame();
-    }
-    else if (playerScore < computerScore) {
-      alert("Computer wins!");
-      resetGame();
-    }
+function endGame() {
+  if (playerScore === maxScore) {
+    alert("Player wins!")
   }
-},
-endGameScenario2: function() {
-  if (roundCount === 4) {
-    if (playerScore === 4) {
-      alert("Player wins!");
-      resetGame();
-    }
-    else if (computerScore === 4) {
-      alert("Computer wins!");
-      resetGame();
-    }
+  else if (computerScore === maxScore) {
+    alert("Computer wins!")
   }
-},
-endGameScenario3: function() {
-  if (roundCount === 3 || roundCount === 4) {
-    if (playerScore === 3) {
-      alert("Player wins!");
-      resetGame();
-    }
-    else if (computerScore === 3) {
-      alert("Computer wins!");
-      resetGame();
-    }  
-  }
-}
-}
+};
+
 
 // Reset the game
 
+let resetting = document.querySelector("#reset-game");
+resetting.addEventListener("click", function() {
+  resetGame();
+});
+
 function resetGame() {
-  roundCount = 0;
+  playerScoreNumber.textContent = "Player's Score: 0";
+  computerScoreNumber.textContent = "Computer's Score: 0";
+  resetBoard.textContent = "";
   playerScore = 0;
   computerScore = 0;
-}
+};
+
+
+
+
 
 
 

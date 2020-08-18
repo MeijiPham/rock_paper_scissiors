@@ -1,21 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Rock Paper Scissors in the Console</title>
+  <title>Rock Paper Scissors</title>
 </head>
 <body>
 <div>
-  <p>Hi! If you want to play, right click, click on "inspect" or "inspect element", then go to "console".</p>
+  <h1>Classic Game of Rock Paper Scissors!</h1>
+  <h2>First one to 5 points wins!</h2>
+</div>
+<div id="player-score">
+  <p>Player's Score: 0</p>
+</div>
+<div id="computer-score">
+  <p>Computer's Score: 0</p>
+</div>
+
+<div id="gameboard-display">
+
 </div>
 
 <div>
-  <button onclick="playerInput.chooseRock()">Rock</button>
+  <button id="rock">Rock</button>
 </div>
 <div>
-  <button onclick="playerInput.choosePaper()">Paper</button>
+  <button id="paper">Paper</button>
 </div>
 <div>
-  <button onclick="playerInput.chooseScissors()">Scissors</button>
+  <button id="scissors">Scissors</button>
+</div>
+<div>
+  <button id="reset-game">Reset</button>
 </div>
 <script src="script.js"></script>
 </body>
